@@ -1,0 +1,594 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[left=24mm,top=2.0cm,right=30mm,bottom=2.0cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{esvect}
+\usepackage{eso-pic}
+\usepackage{pdfpages}
+\usepackage[utf8]{inputenc}
+\usepackage[svgnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{titling}
+\newtheorem{1}{Definição}
+\newtheorem{2}{Análise}
+\newtheorem{3}{Observação}
+
+
+\usepackage[top=0.5cm]{geometry}
+
+\title{\textbf{Redução da complexidade de dados financeiros: aplicação da Análise dos Componentes Principais (PCA) em conjuntos de dados de ações negociadas na Bolsa de Valores do Brasil (B3) no período de 2018 a 2023 }}
+
+\author{ Flavia do Valle\\Thalita Routh}
+
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    
+\end{abstract}
+    
+    
+A análise minuciosa de investimentos desempenha um papel fundamental na tomada de decisões no mercado de ações. Com os avanços da inteligência artificial e das ferramentas de análise de dados, o uso de tecnologia avançada na análise de papéis torna-se cada vez mais relevante no mercado financeiro. Neste estudo, utilizou-se o método de Análise dos Componentes Principais (PCA) em Python para reduzir a dimensionalidade das variáveis em um conjunto de dados, transformando-as em componentes principais. Os resultados obtidos demonstraram uma redução no tempo de processamento e uma otimização dos modelos preditivos, evidenciando o potencial da metodologia proposta no suporte a pesquisas financeiras e análises de investimentos, bem como na seleção criteriosa de ativos diversificados que contribuam para a mitigação de riscos.
+
+\textbf {Palavras-chave:} PCA; ações; variância; covariância; vetor.\\
+\end{abstract}
+
+\section
+
+\textbf{Reducing the complexity of financial data: Application of Principal Component Analysis (PCA) on datasets of stocks traded on the Brazilian Stock Exchange (B3) from 2018 to 2023.}\
+
+\begin{abstract}
+ Thorough investment analysis plays a crucial role in decision-making in the stock market. With advancements in artificial intelligence and data analysis tools, the use of advanced technology in analyzing stocks becomes increasingly relevant in the financial market. In this study, the Principal Component Analysis (PCA) method was employed in Python to reduce the dimensionality of variables in a dataset, transforming them into principal components. The obtained results demonstrated a reduction in processing time and optimization of predictive models, highlighting the potential of the proposed methodology in supporting financial research and investment analysis, as well as in the careful selection of diversified assets that contribute to risk mitigation.
+
+\textbf {Keywords: } PCA; stocks; variance; covariance; vector.\\\end{abstract}\hspace{0.6cm}
+
+
+
+
+
+
+\begin{document}
+
+\section{Introdução} \hspace{0.6cm}
+O mercado de ações representa uma das formas mais relevantes de investimento adotadas em escala global. No entanto, sua análise é considerada um desafio constante no universo financeiro, especialmente devido à imensa quantidade de dados disponíveis e à velocidade crescente das informações que, por sua vez, demanda criteriosa avaliação de diversos fatores, como conjuntura econômica, histórico do setor e das empresas pautadas, margens líquidas e brutas, liquidez média diária das ações, entre outros importantes indicadores de potencial retorno de investimentos. 
+
+\hspace{0.6cm} Com o intuito de alcançar uma gestão de riscos eficiente, especialistas no âmbito financeiro enfatizam fortemente a adoção de uma estratégia que envolva a composição de uma carteira de investimentos diversificada. Contudo, é imperativo salientar que a efetividade dessa estratégia pode ser comprometida caso sejam empregados métodos de análise desatualizados, os quais acarretem tempos de processamento prolongados. Nesse contexto, à medida que os avanços nas tecnologias de inteligência artificial progridem, constata-se um crescimento notável no emprego de abordagens metodológicas sofisticadas para a análise de dados financeiros. Essa prática vem se tornando cada vez mais comum no contexto do processo decisório de investimentos, uma vez que possibilita uma análise mais precisa e ágil.  (HEUVEL; KAPTEIN, 2022)
+
+\hspace{0.6cm} Devido à sua capacidade de reduzir a dimensionalidade dos dados, identificar padrões e estruturas subjacentes, bem como investigar as relações entre as variáveis de um conjunto de dados, a análise dos componentes principais (PCA) tem sido amplamente adotada como uma valiosa ferramenta de estatística multivariada na ciência de dados, abrangendo diversos campos de estudo, incluindo finanças. A relevância da utilização da análise dos componentes principais (PCA) na análise de investimentos reside no fato de que essa medida estatística facilita a compreensão das complexas relações existentes entre os dados financeiros, contribuindo de maneira significativa para a tomada de decisões no mercado de investimentos. (SPECTOR et al., 2023).
+
+\hspace{0.6cm} Na esfera financeira, a aplicação desta abordagem possibilita a seleção de diversos critérios visando a avaliação das correlações e comportamento de ativos com base em suas particularidades, tais como histórico de preços, volatilidade e outros elementos de relevância pertinente. Por exemplo, é factível compreender a correlação  e a variância do desempenho de títulos em relação a um período temporal específico ou por meio de um conjunto de métricas financeiras. Ademais, essa estratégia pode revelar-se especialmente benéfica em contextos de mercados mais flutuantes, possibilitando que o investidor diversifique de maneira mais eficaz sua carteira ao encurtar o tempo de processamento dos dados e ao obter acesso às informações tempestivas. 
+
+\hspace{0.6cm} Para realizar a análise dos componentes principais (PCA), foi necessário pré-processar os dados das ações, normalizando-os e construindo um modelo vetorial que representasse adequadamente as características específicas das ações em análise. Nesse sentido, optou-se por utilizar a linguagem de programação Python, cujas funcionalidades permitiram a conversão dos dados das ações em vetores, possibilitando o uso da função PCA. Assim, tornou-se possível empregar modelos vetoriais que proporcionaram a análise de padrões, bem como a exploração de correlações entre diferentes ativos e a identificação de títulos com potencial de desempenho favorável no mercado de ações brasileiro. 
+
+\hspace{0.6cm} Inicialmente, serão expostos os princípios teóricos subjacentes à análise estatística multivariada, enfocando especificamente o método dos componentes principais (PCA). Na sequência, serão delineados os procedimentos metodológicos adotados, os quais englobam a utilização de modelos vetoriais e ferramentas avançadas de análise de dados, com o propósito de identificar padrões, tendências e correlações entre as ações. Os resultados obtidos serão exibidos, enfatizando descobertas relevantes e insights significativos que possam ser empregados em estudos financeiros.
+
+\section{Revisão da Literatura}
+
+\hspace{0.6cm}A análise multivariada é uma metodologia estatística que permite examinar de forma conjunta a relação entre múltiplas variáveis. A aplicação desse conceito é valiosa para identificar padrões complexos e explorar as interações não lineares. A análise de componentes principais (PCA), por exemplo, desempenha um papel significativo neste campo estatístico e da ciência de dados, tal qual área multidisciplinar integra conhecimentos e técnicas do ramo da estatística, matemática, ciência da computação e outras especialidades, com o propósito de obter estimativas e identificar tendências em uma base de dados. 
+
+\hspace{0.6cm} Essa abordagem utiliza métodos, como inferência estatística, mineração de dados, a aprendizagem de máquina e os princípios da álgebra linear, para coletar, organizar, analisar e interpretar grandes volumes de dados, visando solucionar problemas complexos e embasar o processo de tomada de decisão em evidências. (HEUVEL; KAPTEIN, 2022, SPECTOR et al., 2023).
+
+\hspace{0.6cm}No contexto financeiro, a técnica de Análise de Componentes Principais (PCA) desempenha um papel fundamental ao permitir uma síntese do conteúdo informativo presente em conjuntos de dados de alta dimensionalidade, por meio da extração de um conjunto reduzido de variáveis não correlacionadas, denominadas componentes principais, visando simplificar sua representação sem comprometer substancialmente a quantidade de informações contidas nos dados. Tais componentes são obtidas como combinações lineares dos fatores originais, onde o primeiro componente é selecionado com base na sua capacidade de explicar a maior variabilidade presente entre as variáveis. 
+
+\hspace{0.6cm}Os componentes principais subsequentes são calculados de forma a explicar a dispersão restante de maneira ordenada e consecutiva. Dessa forma, o PCA busca capturar gradativamente as informações mais relevantes contidas no conjunto de dados ao preservar a maior parte da variabilidade original. (RAMOVIC; AKERMAN, 2021).
+
+\hspace{0.6cm} Diante do exposto, quando se trata da aplicação de processos estatísticos baseados em dados no contexto financeiro, destaca-se o seu uso no mercado de ações, que é caracterizado por uma quantidade massiva de informações e flutuações constantes. Nesse contexto, uma das principais vantagens da análise de dados é a capacidade de identificar padrões, tendências e correlações ocultas nos dados financeiros. (ROBERT, 2021)
+
+\hspace{0.6cm} Com esse propósito, pode-se destacar primeiramente a exploração da variância presente nos dados como uma das abordagens fundamentais, cujo parâmetro é uma métrica de dispersão que quantifica o afastamento dos valores de um conjunto de dados em relação à sua média. No âmbito financeiro, a variância é frequentemente utilizada para avaliar a volatilidade de uma ação ou de uma carteira de investimentos. Uma variância alta indica uma maior flutuação nos retornos, o que implica em um maior risco (ZAGIDULLINA, 2021).
+
+\hspace{0.6cm} Outra métrica relevante é a covariância, que representa o grau de associação linear entre duas variáveis. A covariância mede a tendência de duas variáveis de se moverem juntas em termos de sua relação linear. No campo financeiro, a covariância entre os retornos de duas ações pode fornecer informações sobre como elas se movem em relação uma à outra. No entanto, a covariância não é facilmente interpretável, pois seu valor depende das unidades das variáveis. 
+
+\hspace{0.6cm} Para contornar esse problema, é comum utilizar a matriz de correlação, que é uma medida padronizada da relação linear entre as variáveis. A matriz de correlação varia de -1 a 1, onde -1 indica uma relação negativa perfeita, 1 indica uma relação positiva perfeita e 0 indica ausência de correlação (ZAGIDULLINA, 2021).
+
+\hspace{0.6cm} Ao condensar as informações contidas nos conjuntos de dados, tais técnicas contribuem para a tomada de decisões embasadas, viabilizando uma análise mais abrangente dos padrões e tendências do mercado financeiro. A adoção do PCA e a redução de dimensionalidade, em conjunto com outras metodologias estatísticas, conferem aos investidores uma posição competitiva, ao possibilitarem uma análise mais ágil e precisa de grandes volumes de dados.
+
+
+
+\section{Procedimentos Metodológicos}
+
+\hspace{0.6cm} A metodologia adotada para a realização da presente pesquisa foi baseada na concepção e desenvolvimento de um algoritmo projetado para efetuar o processamento e a estruturação dos dados brutos correspondente ao mercado de ações brasileiro (B3) de 5 anos, abrangendo o período de 2018 a 2022, que totalizou 300 mil empresas. Toda análise pode ser vista no Github, através do link:  \\\\ https://github.com/thalitarouth \\
+
+
+
+\hspace{0.6cm} A fim de possibilitar uma análise minuciosa e uma manipulação precisa dessas informações, por meio de uma sequência estruturada de etapas, buscou-se alcançar resultados consistentes e confiáveis, permitindo explorar de maneira profunda os insights contidos nos dados e extrair conhecimentos relevantes para a compreensão do cenário financeiro. Desse modo, os seguintes passos adotados foram os seguintes:\\
+
+
+\subsection {Leitura do arquivo de dados brutos}
+
+
+
+\hspace{0.6cm} O algoritmo realizou a leitura do 2 arquivo fornecido contendo os dados brutos da B3. \\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura00.png}
+\end{left}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\
+
+\subsection {Extração dos dados}
+
+\hspace{0.6cm} Para cada linha do arquivo, o algoritmo extraiu as informações relevantes de cada campo.\\
+
+
+
+\begin{minipage}{\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{metodologia3.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+
+\subsection {Criação do DataFrame}
+
+\hspace{0.6cm} Após o tratamento e organização dos dados, um DataFrame foi criado utilizando a biblioteca pandas do Python. O DataFrame foi estruturado de forma tabular, com as colunas corretamente nomeadas.\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{metodogia4.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\hspace{0.6cm} Com o processamento de todas as linhas, o algoritmo utiliza a lista 'ordem' para criar um DataFrame com as colunas corretamente nomeadas. As colunas são renomeadas utilizando um dicionário de mapeamento, o que facilita a compreensão dos dados. O DataFrame resultante é retornado como saída da função.\\\\\\\\\\\\\
+
+
+
+\subsection {Disponibilização do código-fonte}
+
+\hspace{0.6cm} O código-fonte do algoritmo desenvolvido está disponível em um repositório online, permitindo o acesso e utilização por outros pesquisadores interessados na análise de dados da B3.\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{metodogia6.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\subsection {Transformação dos dados}
+
+\hspace{0.6cm} As transformações e formatações necessárias incluíram a conversão de formatos de data, tratamento de valores ausentes e ajustes de escala.\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura7.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+\subsection {Realização das Análises dos Componentes}
+
+\hspace{0.6cm}A análise e os resultados obtidos neste estudo visaram identificar a presença de correlações lineares próximas entre as ações baseada na aplicação de uma diversificada gama de componentes principais.
+
+\hspace{0.6cm} Criação da Matriz de Covariância, para isso é necessário a padronização das variáveis para que sejam comparáveis entre si.\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura8.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\
+
+\subsection {Seleção de Colunas Núméricas}
+
+\hspace{0.6cm} Para a realização da análise, só é possivel realizar em somente colunas numéricas.
+ \\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura9.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage} \\\\
+
+
+\hspace{0.6cm} Foram escolhidas 5 anos de dados da Bolsa de Valores do Brasil (B3), nas quais serão análisadas o comportamente ao longo desses período e após isso a mesma análise será aplicada sobre os anos individualmente.
+
+\hspace{0.6cm} Na ausência de tal adequação e organização dos dados brutos, conforme evidenciado nos quadros apresentados, a viabilidade e replicabilidade da pesquisa seria comprometida, dificultando a obtenção de resultados confiáveis. Dessa forma,a implementação desse algoritmo foi essencial para possibilitar a aplicação das metodologias mencionadas neste estudo, as quais sao fundamentais para a análise e manipulação de dados. \\
+
+
+\section{Realização das Análises dos Componentes}
+
+ \hspace{0.6cm} A análise e os resultados obtidos neste estudo visaram identificar a presença de correlações lineares próximas entre as ações por meio da utilização de uma abordagem abrangente baseada na aplicação de uma diversificada gama de componentes principais.\\
+
+ \subsection {Matriz de Correlação}
+
+\hspace{0.6cm}  Através da análise da matriz de correlação foi possível identificar o grau de interdependência linear entre as ações e determinar se existem padrões de comportamento semelhantes ou opostos entre elas, conforme exibido a seguir:\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura10.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}
+
+
+ \hspace{0.6cm} Ao realizar a análise da matriz de correlação entre as ações selecionadas, observou-se que algumas apresentaram correlações positivas significativas, indicando uma tendência de movimento conjunto. Isso sugere que essas ações podem responder de maneira similar a eventos e influências externas, como mudanças no mercado financeiro ou notícias econômicas. 
+ 
+\hspace{0.6cm} Por outro lado, também foram identificadas correlações negativas entre algumas ações, o que implica em um comportamento oposto entre elas. Isso pode ser resultado de fatores específicos que afetam negativamente uma ação enquanto beneficiam outra, como concorrência direta ou características setoriais distintas.
+
+ \hspace{0.6cm} A análise da matriz de correlação entre as ações permite ainda identificar a presença de ações com correlação próxima a zero, apresentadas em azul na figura abaixo, o que indica baixa interdependência linear entre elas. Essas ações podem ser consideradas como potenciais ativos de diversificação, pois seus movimentos de preço e retorno tendem a ser menos afetados por fatores comuns.\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura11.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura12.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+ \hspace{0.6cm} Tais ações podem ser consideradas como potenciais ativos de diversificação, pois seus movimentos de preço e retorno tendem a ser menos afetados por fatores comuns. Essa análise proporciona uma visão abrangente das relações entre as ações estudadas, auxiliando os investidores a selecionarem ativos com baixa correlação entre si para reduzir o risco e maximizar o potencial de retorno.
+ 
+\hspace{0.6cm} É importante ressaltar que a análise da matriz de correlação deve ser complementada por outras técnicas estatísticas e de modelagem para uma compreensão mais completa do comportamento dos ativos financeiros.\\\\
+ 
+
+ \subsection {Matriz de Covariância}
+
+\hspace{0.6cm} A análise da matriz de covariância permitiu compreender as relações de variabilidade conjunta entre ações, tornando possivel avaliar não apenas a direção das relações entre os ativos financeiros em questão, mas também a intensidade dessas relações, demonstradas na Tabela a seguir:\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura13.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\hspace{0.6cm} Ao examinar a matriz de covariância, observa-se que os valores diagonais representam as variâncias individuais de cada ação, indicando a medida de dispersão dos retornos de cada ativo isoladamente. Quanto maior o valor na diagonal principal, maior é a variabilidade dos retornos de uma ação em particular.
+
+\hspace{0.6cm} Além disso, os valores fora da diagonal principal da matriz de covariância representam as covariâncias entre pares de ações, sendo possível identificar os pares de ações que apresentam maior covariância. Esses valores indicam o grau de associação linear entre os retornos das ações, permitindo avaliar se elas tendem a se mover em conjunto, variando de -1 a 1. O coeficiente de correlação próximo de 1 indica uma forte correlação positiva, enquanto um valor próximo de -1 indica uma forte correlação negativa. A covariância próxima de zero indica uma relação fraca ou inexistente entre os retornos das ações.
+
+\hspace{0.6cm} A partir dos valores da matriz de covariância, é possível calcular a volatilidade da carteira e, por meio de técnicas de otimização, encontrar a combinação ideal de ativos que maximiza o retorno esperado para um determinado nível de risco. No entanto, por assumir uma relação linear entre os retornos das ações, a análise da matriz de covariância pode não ser válida em todos os casos, sendo necessario combinar essa análise com outras técnicas estatiticas para uma compreensão mais abrangente.\\\\
+ 
+
+\subsection {Busca dos Autovalores e Vetores da Matriz}
+
+\hspace{0.6cm} A busca dos autovetores e autovalores da matriz de covariância foi realizada, permitindo compreender a variabilidade dos dados e sua distribuição acumulada. O calculo da variância explicada de cada autovalor é dada por:\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura14.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura15.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+\hspace{0.6cm} Os autovalores foram ordenados, indicando a quantidade de variabilidade presente nos dados, ou seja, a proporção de variância que a primeira variável acumula, cujos dados estão ordenados pelos autovalores.
+
+\hspace{0.6cm} A análise da soma dos autovalores e da porcentagem de variância acumulada da primeira variável fornece informações essenciais sobre a estrutura de variabilidade das ações, assim como a visualização da porcentagem de variância acumulada da é um indicador importante para compreender o quão representativa essa variável é em relação à variabilidade total dos dados.\\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura16.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\
+
+
+\hspace{0.6cm} No caso apresentado, a vizualização da variancia dos dados totais que a primeira variavel acumula é representada por [72.09, 27.91, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], isto é, 72.09\% da variância total dos dados, é indicativo de que essa variável é responsável por capturar uma parcela significativa da variabilidade presente nos dados analisados. 
+
+\hspace{0.6cm} No que se refere a soma dos autovalores, neste caso, igual a 6661507990521419.0, representa a quantidade de variabilidade capturada pelos componentes principais utilizados na análise em relação a primeira variável. 
+
+\hspace{0.6cm} A partir dessas informações, foi possível identificar quais componentes são mais relevantes na análise e descartar aqueles que possuem uma contribuição insignificante para a variabilidade total.
+
+\subsection {Aplicação da Análise dos Componentes Principais (PCA)}
+
+\hspace{0.6cm} Em seguida, os valores projetados nos componentes principais são adicionados ao DataFrame original, enriquecendo-o com as informações relevantes para análise posterior. 
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura17.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\\
+
+\hspace{0.6cm} O código apresentado aplica o PCA para reduzir a dimensionalidade dos dados, utilizando autovetores para identificar as direções de maior variabilidade. Por fim, a Tabela resultante, é apresentada de forma visualmente organizada, permitindo uma análise mais clara dos resultados. \\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura18.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\\
+
+\hspace{0.6cm} Em seguida, foram extraídos os autovetores correspondentes aos componentes principais. Esses autovetores são armazenados na matriz A para uso posterior. Daí, a matriz de dados original é multiplicada pela matriz A contendo os autovetores selecionados, cuja operação resultou em uma nova matriz, denominada X. Essa matriz representa os valores projetados nos componentes principais, ou seja, é uma representação reduzida dos dados originais em um espaço de menor dimensionalidade. Para facilitar a interpretação e análise dos resultados, os nomes das colunas da matriz X foram atribuídos às variáveis PCA 1 a PCA 8.
+
+\hspace{0.6cm} Adicionalmente, gráficos foram gerados para auxiliar na visualização dos resultados. \\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura19.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\
+
+\hspace{0.6cm} O primeiro gráfico exibe a porcentagem de variância explicada por cada componente, permitindo a identificação dos componentes com maior contribuição para a explicação da variabilidade dos dados. Já o segundo gráfico apresenta a soma acumulativa da porcentagem de variância explicada, fornecendo uma perspectiva sobre a quantidade de variância que é explicada à medida que se considera um número crescente de componentes.
+
+\hspace{0.6cm} Em um primeiro momento, o número de componentes principais é determinado a partir das dimensões da matriz resultante. Isso permitiu compreender a quantidade de informações que será preservada durante o processo de redução dimensional.
+
+\hspace{0.6cm} Com base na análise realizada, constatou-se que, a partir do quarto componente, não é possível visualizar os dados em um espaço bidimensional ou tridimensional. Isso indica que, para obter uma representação visual adequada dos dados, é necessário considerar no mínimo três componentes, os quais explicam aproximadamente 93\% da variância total. Assim, a matriz de dados original é enriquecida com as colunas correspondentes aos componentes principais. Essa etapa é realizada para facilitar a análise posterior dos dados.
+
+\hspace{0.6cm} Após a criação da matriz dfpc, são selecionadas apenas as observações que possuem códigos de negociação específicos, como 'PETR4', 'BRF SA', 'VALE3', 'BOVB11F' e 'AAPL34'. Essa filtragem permite focar a análise nos ativos financeiros de interesse.\\\\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura20.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura21.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura22.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura23.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\hspace{0.6cm} Em resumo, o código aplicou a técnica de componentes principais (PCA) aos dados, projetando as observações nos componentes principais selecionados. Isso resulta em uma representação de menor dimensionalidade, facilitando a análise posterior.\\\\
+
+\subsection{Criar um dicionário de mapeamento de cores para CODNEG}
+\hspace{0.6cm} Para a visualização dos resultados, foi criado um dicionário de mapeamento de cores para as diferentes ações. Em seguida, um gráfico de dispersão foi gerado, destacando as duas primeiras componentes principais (PCA 1 e PCA 2), sendo as cores dos pontos correspondentes às ações mapeadas pelo dicionário.\\\\
+
+codneg_colors = {'PETR4': 'red', 'VALE3': 'blue', 'ITUB4': 'green',
+
+# Adicione mais mapeamentos de CODNEG para cores, se necessário
+}
+
+plt.figure(figsize=(10, 6))
+
+Plot das PCAs com destaque de cor pelo CODNEG
+plt.scatter(dfpc['PCA 1'], dfpc['PCA 2'], c=dfpc['CODNEG'].map(codneg_colors), label='PCA 1 e 2')
+
+Configuração do eixo x e y
+plt.xlabel('PCA 1') plt.ylabel('PCA 2')
+
+Configuração do título e legenda
+plt.title('Análises dos 2 Maiores Componentes') plt.legend()
+
+Configuração dos ticks do eixo x
+plt.xticks(rotation=45)
+
+Exibição do gráfico
+plt.show()
+
+
+\subsection{Distribuição dos Valores Projetados nos Componentes}
+\hspace{0.6cm} No contexto da análise de componentes principais (PCA), uma dessas análises consiste na identificação dos pontos extremos, ou seja, observações atípicas ou casos de destaque que se destacam em relação aos demais.
+\hspace{0.6cm} Outra análise importante é o agrupamento de observações, que busca identificar grupos semelhantes entre os dados. Por meio da PCA, é possível visualizar a proximidade ou semelhança entre as observações, permitindo a identificação de grupos distintos e a compreensão das características que os diferenciam. \\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura24.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+\subsection{Exibição dos gráficos}
+
+\hspace{0.6cm} A seguir a demonstração da tendência temporal dos PCAs e a visualização em 3D. \\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico resultado.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico 3dd.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}
+
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico2.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\\\\
+
+
+\hspace{0.6cm} Tabelas demonstrativas dos PCAs:
+\\\\
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico 4.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico 5 .png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico 6.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\\\
+
+ Tendência temporal dos PCAs e preço médio
+\\\\
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{grafico3.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}
+
+\begin{minipage}{.7\linewidth}
+\begin{left}
+    \includegraphics[width=12cm]{figura25.png}
+\end{left}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\begin{equation}
+\end{equation}
+\end{minipage}\\\\
+
+
+
+\section{Conclusão}
+
+\hspace{0.6cm}A análise utilizando componentes principais proporciona uma visão abrangente e multivariada de um conjunto de dados. Cada componente principal é uma combinação linear das variáveis originais. O primeiro componente principal busca explicar a maior variabilidade presente nos dados, enquanto o segundo componente busca explicar a variabilidade restante, e assim por diante até o último componente.
+
+É possível escolher a quantidade de componentes que, quando somados, representam uma porcentagem próxima a cem porcento da variabilidade total dos dados. Através da utilização desses componentes, podemos extrair informações importantes e produzir visualizações de dados em diversos planos. No entanto, é importante destacar que só podemos visualizar até o terceiro plano. Por essa razão, a maioria das análises costuma se limitar a utilizar até quatro componentes.
+
+\hspace{0.6cm} O algoritmo apresentado neste artigo é uma solução eficiente e organizada para o processamento de dados brutos da bolsa de valores. Ele permite extrair informações relevantes dos campos do arquivo de dados, armazená-las em um DataFrame e renomear as colunas para facilitar a interpretação dos dados. Com o uso de barras de progresso, o algoritmo fornece feedback visual sobre o progresso do processamento dos dados. Essa solução pode ser facilmente aplicada em projetos de análise de dados financeiros.\\\\
+
+
+\section{Referências}
+
+
+ROBERT, Tonny. Análise multivariada de dados. Brazil, Editora Senac São Paulo, 2021.\\\\
+SPECTOR, Alfred Z. et al. Data Science in Context: Foundations, Challenges, Opportunities. 2023.\\\\
+ZAGIDULLINA, Aygul. High-Dimensional Covariance Matrix Estimation: An Introduction to Random Matrix Theory. Springer Nature, 2021.
+
+
+
+\end{document}
